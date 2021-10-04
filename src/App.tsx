@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Home from "./components/home";
 import Button from "react-bootstrap/Button";
 
-function App() {
+const App: React.FC = () => {
   const adminUser = {
     email: "admin@admin.com",
     password: "admin123",
@@ -13,8 +13,8 @@ function App() {
 
   const Login = (details: any) => {
     if (
-      details.email == adminUser.email &&
-      details.password == adminUser.password
+      details.email === adminUser.email &&
+      details.password === adminUser.password
     ) {
       console.log("Logged in");
       setUser({
@@ -25,13 +25,13 @@ function App() {
       setError("Details dont match");
     }
   };
-  const Logout = (details: any) => {
+  const Logout = () => {
     setUser({ name: "", email: "" });
   };
 
   return (
     <div className="App">
-      {user.email != "" ? (
+      {user.email !== "" ? (
         <div className="Welcome" style={{ textAlign: "center" }}>
           <h2>
             Welcome,<span>{user.name}</span>
@@ -45,5 +45,5 @@ function App() {
       )}
     </div>
   );
-}
+};
 export default App;

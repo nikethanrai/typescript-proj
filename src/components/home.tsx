@@ -6,7 +6,12 @@ import Form from "react-bootstrap/Form";
 
 import "./App.css";
 
-const Home = ({ Login, error }) => {
+interface Props {
+  Login: any;
+  error: string;
+}
+
+const Home: React.FC<Props> = ({ Login, error }) => {
   const [details, setDetails] = useState({ name: "", email: "", password: "" });
 
   const submitHandler = (e: any) => {
@@ -21,7 +26,7 @@ const Home = ({ Login, error }) => {
         <h1 className="title">Login Page</h1>
         <h6>email: admin@admin.com, pw: admin123</h6>
 
-        {error != "" ? <div> {error}</div> : ""}
+        {error !== "" ? <div> {error}</div> : ""}
 
         <Form className="login-sec" onSubmit={submitHandler}>
           <Form.Group className="mb-3" controlId="formBasicUsername">
