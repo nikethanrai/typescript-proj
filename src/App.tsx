@@ -10,8 +10,19 @@ function App() {
   const [user, setUser] = useState({ name: "", email: "" });
   const [error, setError] = useState("");
 
-  const Login = (details: any) => {};
-  const Logout = (details: any) => {};
+  const Login = (details: any) => {
+    if (
+      details.email == adminUser.email &&
+      details.password == adminUser.password
+    ) {
+      console.log("Logged in");
+    } else {
+      console.log("Details dont match");
+    }
+  };
+  const Logout = (details: any) => {
+    setUser({ name: "", email: "" });
+  };
 
   return (
     <div className="App">
