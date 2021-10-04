@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Home from "./components/home";
+import Button from "react-bootstrap/Button";
 
 function App() {
   const adminUser = {
@@ -16,8 +17,12 @@ function App() {
       details.password == adminUser.password
     ) {
       console.log("Logged in");
+      setUser({
+        name: details.name,
+        email: details.email,
+      });
     } else {
-      console.log("Details dont match");
+      setError("Details dont match");
     }
   };
   const Logout = (details: any) => {
@@ -31,7 +36,9 @@ function App() {
           <h2>
             Welcome,<span>{user.name}</span>
           </h2>
-          <button>Logout</button>
+          <Button onClick={Logout} variant="primary">
+            Logout
+          </Button>
         </div>
       ) : (
         <Home Login={Login} error={error} />

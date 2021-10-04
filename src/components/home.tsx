@@ -21,7 +21,7 @@ const Home = ({ Login, error }) => {
     <div>
       <Container className="d-flex justify-content-center align-items-center login-page ">
         <h1 className="title">Login Page</h1>
-        {/*ERROR*/}
+        {error != "" ? <div> {error}</div> : ""}
 
         <Form className="login-sec" onSubmit={submitHandler}>
           <Form.Group className="mb-3" controlId="formBasicUsername">
