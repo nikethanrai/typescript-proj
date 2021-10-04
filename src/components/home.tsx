@@ -15,12 +15,12 @@ const Home = ({ Login, error }) => {
     Login(details);
   };
 
-  //-----------------------------------------------
-
   return (
     <div>
       <Container className="d-flex justify-content-center align-items-center login-page ">
         <h1 className="title">Login Page</h1>
+        <h6>email: admin@admin.com, pw: admin123</h6>
+
         {error != "" ? <div> {error}</div> : ""}
 
         <Form className="login-sec" onSubmit={submitHandler}>
