@@ -1,48 +1,29 @@
 import React, { useState } from "react";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import Dashboard from "./components/dashboard/dashboard";
+import Preferences from "./components/Preferences/Preferences";
 import Home from "./components/home";
-import Button from "react-bootstrap/Button";
-
+import "./App.css";
 const App: React.FC = () => {
-  const adminUser = {
-    email: "admin@admin.com",
-    password: "admin123",
-  };
+  const [token, setToken] = useState();
 
-  const [user, setUser] = useState({ name: "", email: "" });
-  const [error, setError] = useState("");
-
-  const Login = (details: any) => {
-    if (
-      details.email === adminUser.email &&
-      details.password === adminUser.password
-    ) {
-      console.log("Logged in");
-      setUser({
-        name: details.name,
-        email: details.email,
-      });
-    } else {
-      setError("Details dont match");
-    }
-  };
-  const Logout = () => {
-    setUser({ name: "", email: "" });
-  };
+  if (!token) {
+    return <Home setToken={setToken} />;
+  }
 
   return (
     <div className="App">
-      {user.email !== "" ? (
-        <div className="Welcome" style={{ textAlign: "center" }}>
-          <h2>
-            Welcome,<span>{user.name}</span>
-          </h2>
-          <Button onClick={Logout} variant="primary">
-            Logout
-          </Button>
-        </div>
-      ) : (
-        <Home Login={Login} error={error} />
-      )}
+      <h1>Application</h1>
+      <BrowserRouter>
+        <Switch>
+          <Route path="/dashboard">
+            <Dashboard />
+          </Route>
+          <Route path="/preferences">
+            <Preferences />
+          </Route>
+        </Switch>
+      </BrowserRouter>
     </div>
   );
 };

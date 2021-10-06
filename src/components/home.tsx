@@ -1,42 +1,51 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 
-import "./App.css";
+import "./home.css";
 
-interface Props {
-  Login: any;
-  error: string;
+async function loginUser(credentials: any) {
+  return fetch("https://anisoft.us/chatapp/api/user/validateuser", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(credentials),
+  }).then((data) => data.json());
 }
 
-const Home: React.FC<Props> = ({ Login, error }) => {
-  const [details, setDetails] = useState({ name: "", email: "", password: "" });
+interface Login {
+  setToken: any;
+}
 
-  const submitHandler = (e: any) => {
+const Home: React.FC<Login> = ({ setToken }) => {
+  const [username, setUserName] = useState();
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+
+  const submitHandler = async (e: any) => {
     e.preventDefault();
-
-    Login(details);
+    const token = await loginUser({
+      email,
+      password,
+    });
+    setToken(token);
   };
 
   return (
     <div>
       <Container className="d-flex justify-content-center align-items-center login-page ">
         <h1 className="title">Login Page</h1>
-        <h6>email: admin@admin.com, pw: admin123</h6>
-
-        {error !== "" ? <div> {error}</div> : ""}
 
         <Form className="login-sec" onSubmit={submitHandler}>
           <Form.Group className="mb-3" controlId="formBasicUsername">
             <Form.Label>User name</Form.Label>
             <Form.Control
               placeholder="UserName"
-              onChange={(e) => {
-                setDetails({ ...details, name: e.target.value });
-              }}
-              value={details.name}
+              onChange={(e: any) => setUserName(e.target.value)}
             />
             <Form.Text className="text-muted"></Form.Text>
           </Form.Group>
@@ -46,10 +55,7 @@ const Home: React.FC<Props> = ({ Login, error }) => {
             <Form.Control
               type="email"
               placeholder="Enter email"
-              onChange={(e) => {
-                setDetails({ ...details, email: e.target.value });
-              }}
-              value={details.email}
+              onChange={(e: any) => setEmail(e.target.value)}
             />
             <Form.Text className="text-muted"></Form.Text>
           </Form.Group>
@@ -59,10 +65,7 @@ const Home: React.FC<Props> = ({ Login, error }) => {
             <Form.Control
               type="password"
               placeholder="Password"
-              onChange={(e) => {
-                setDetails({ ...details, password: e.target.value });
-              }}
-              value={details.password}
+              onChange={(e: any) => setPassword(e.target.value)}
             />
           </Form.Group>
           <Button variant="primary" type="submit">
@@ -72,5 +75,8 @@ const Home: React.FC<Props> = ({ Login, error }) => {
       </Container>
     </div>
   );
+};
+Home.propTypes = {
+  setToken: PropTypes.func.isRequired,
 };
 export default Home;
